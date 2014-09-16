@@ -1,0 +1,99 @@
+\pdfminorversion=4
+
+\documentclass{beamer}
+
+\def\event{{ICCSW'14}}
+
+\ifdefined\withcomments
+  \usetheme[event=\event,footlineauthor,comments]{D3S}
+\else
+  \usetheme[event=\event,footlineauthor]{D3S}
+\fi
+
+\usepackage{multirow}
+
+\title{Predicate Abstraction in Program Verification}
+\author{Jakub Daniel, Pavel Parízek}
+
+\def\fakesc#1{\fakecap#1\egroup}
+\def\fakecap#1{#1\bgroup\scriptsize}
+
+\begin{document}
+  \titleframe
+
+  \begin{frame}{Outline}
+    \begin{columns}
+      \begin{column}{0.45\textwidth}
+        \begin{itemize}
+          \item Motivation
+          \item Abstract Model Checking
+          \item Abstraction Refinement
+          \item Lazy Abstraction
+          \item \fakesc{IMPACT} Algorithm
+        \end{itemize}
+      \end{column}
+      \begin{column}{0.45\textwidth}
+        \begin{itemize}
+          \item Practice
+            \begin{itemize}
+              \item \fakesc{BLAST}
+              \item \fakesc{WOLVERINE}
+              \item \fakesc{{CPA}CHECKER}
+              \item \fakesc{UFO}
+            \end{itemize}
+        \end{itemize}
+      \end{column}
+    \end{columns}
+  \end{frame}
+
+  {
+    \usebackgroundtemplate{
+      \vbox{
+        \vskip2cm\hbox to \hsize{\hfill\includegraphics{slides1.mps}}
+      }
+    }
+    \begin{frame}{Motivation}
+
+      buggy programs, reliability \ldots
+
+      model checking
+
+      state space traversal
+    \end{frame}
+  }
+
+  \begin{frame}{Abstraction Model Checking}
+    addresses data domains (explosion)
+  \end{frame}
+
+  {
+
+    \usebackgroundtemplate{
+      \vbox{
+        \vskip2cm\hbox to \hsize{\hfill\includegraphics[scale=0.9]{slides2.mps}}
+      }
+    }
+    \begin{frame}{Abstraction Refinement}
+      CEGAR
+    \end{frame}
+  }
+
+  \begin{frame}{Lazy Abstraction}
+  \end{frame}
+
+  \begin{frame}{\fakesc{I\large{}MPACT} Algorithm}
+  \end{frame}
+
+  \begin{frame}{Example Program}
+    something subjected to the following tools for verification
+  \end{frame}
+
+  \subtitleframe{\fakesc{B\Large{}LAST} \\ \vskip1em \small (Lazy Predicate Abstraction)}
+  \subtitleframe{\fakesc{W\Large{}OLVERINE} \\ \vskip1em \small (Even Lazier Predicate Abstraction - \fakesc{IMPACT} Algorithm)}
+  \subtitleframe{\fakesc{{CPA}\Large{}CHECKER} \\ \vskip1em \small (Configurable Verification Platform)}
+  \subtitleframe{\fakesc{U\Large{}FO} \\ \vskip1em \small (Verification Framework)}
+
+  \begin{frame}{Wrap Up}
+    might maybe mention sv-comp
+  \end{frame}
+\end{document}
