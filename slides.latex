@@ -13,7 +13,7 @@
 \usepackage{multirow}
 
 \title{Predicate Abstraction in Program Verification}
-\author{Jakub Daniel, Pavel Parízek}
+\author{{\bf Jakub Daniel}, Pavel Parízek}
 
 \def\fakesc#1{\fakecap#1\egroup}
 \def\fakecap#1{#1\bgroup\scriptsize}
@@ -41,6 +41,7 @@
               \item \fakesc{{CPA}CHECKER}
               \item \fakesc{UFO}
             \end{itemize}
+          \item Our Work
         \end{itemize}
       \end{column}
     \end{columns}
@@ -92,6 +93,13 @@
   \subtitleframe{\fakesc{W\Large{}OLVERINE} \\ \vskip1em \small (Even Lazier Predicate Abstraction - \fakesc{IMPACT} Algorithm)}
   \subtitleframe{\fakesc{{CPA}\Large{}CHECKER} \\ \vskip1em \small (Configurable Verification Platform)}
   \subtitleframe{\fakesc{U\Large{}FO} \\ \vskip1em \small (Verification Framework)}
+  \subtitleframe{\fakesc{P\Large{}ANDA} \\ \vskip1em \small \url{https://github.com/d3sformal/panda.git}}
+
+  {
+    \usebackgroundtemplate{\vbox to \vsize{\vfill\hbox to \hsize{\hfill\tiny see \url{https://github.com/d3sformal/panda.git}}\vskip-1cm}}
+    \begin{frame}{\fakesc{P\large{}ANDA}}
+    \end{frame}
+  }
 
   \begin{frame}{Wrap Up}
     might maybe mention sv-comp
