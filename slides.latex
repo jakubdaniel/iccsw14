@@ -10,10 +10,21 @@
   \usetheme[event=\event,footlineauthor]{D3S}
 \fi
 
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{listings}
 \usepackage{multirow}
 
+\lstset{
+    language=C,
+    keywords=[2]{assert},
+    keywordstyle=\color{darkblue}\bfseries,
+    keywordstyle=[2]{\color{darkred}\bfseries},
+    escapeinside={(*}{*)}
+}
+
 \title{Predicate Abstraction in Program Verification}
-\author{{\bf Jakub Daniel}, Pavel Parízek}
+\author{{\slshape \bfseries Jakub Daniel}, Pavel Parízek}
 
 \def\fakesc#1{\fakecap#1\egroup}
 \def\fakecap#1{#1\bgroup\scriptsize}
@@ -54,21 +65,44 @@
       }
     }
     \begin{frame}{Motivation}
-
-      buggy programs, reliability \ldots
-
-      model checking
-
-      state space traversal
+      \begin{itemize}
+        \itemsep=2em
+        \item Software is ubiquitous
+        \item Bugs tend to be costly
+        \item Testing is not enough
+        \item Explicit model checking is expensive
+      \end{itemize}
     \end{frame}
   }
 
+  \begin{frame}[fragile]{Example Target Program}
+    \begin{itemize}
+      \item \ldots
+        \begin{lstlisting}
+unsigned int n = (*\bf\color{darkblue} *{}*);
+unsigned int x = n, y = 0;
+
+while (x > 0) {
+    --x;
+    ++y;
+}
+
+assert y != n;
+\end{lstlisting}
+\item \ldots
+\end{itemize}
+\end{frame}
+
   \begin{frame}{Abstraction Model Checking}
-    addresses data domains (explosion)
+    \begin{itemize}
+      \item Smaller state space
+      \item Predicate Abstraction
+
+        {\tt x.f > 3}
+    \end{itemize}
   \end{frame}
 
   {
-
     \usebackgroundtemplate{
       \vbox{
         \vskip2cm\hbox to \hsize{\hfill\includegraphics[scale=0.9]{slides2.mps}}
@@ -82,17 +116,22 @@
   \begin{frame}{Lazy Abstraction}
   \end{frame}
 
+  \subtitleframe{\fakesc{B\Large{}LAST} \\ \vskip1em \small (Lazy Predicate Abstraction)}
+
   \begin{frame}{\fakesc{I\large{}MPACT} Algorithm}
   \end{frame}
 
-  \begin{frame}{Example Program}
-    something subjected to the following tools for verification
+  \subtitleframe{\fakesc{W\Large{}OLVERINE} \\ \vskip1em \small (Even Lazier Predicate Abstraction - \fakesc{IMPACT} Algorithm)}
+
+  \begin{frame}{Further Enhancements}
   \end{frame}
 
-  \subtitleframe{\fakesc{B\Large{}LAST} \\ \vskip1em \small (Lazy Predicate Abstraction)}
-  \subtitleframe{\fakesc{W\Large{}OLVERINE} \\ \vskip1em \small (Even Lazier Predicate Abstraction - \fakesc{IMPACT} Algorithm)}
   \subtitleframe{\fakesc{{CPA}\Large{}CHECKER} \\ \vskip1em \small (Configurable Verification Platform)}
   \subtitleframe{\fakesc{U\Large{}FO} \\ \vskip1em \small (Verification Framework)}
+
+  \begin{frame}{Our Research}
+  \end{frame}
+
   \subtitleframe{\fakesc{P\Large{}ANDA} \\ \vskip1em \small \url{https://github.com/d3sformal/panda.git}}
 
   {
@@ -101,7 +140,44 @@
     \end{frame}
   }
 
+  {
+    \usebackgroundtemplate{\vbox to \vsize{%
+      \vfill%
+      \hbox to \hsize{\hskip2em\scalebox{0.5}{*) Aggregated results of different BMC-based tools: LLBMC, \fakesc{FRANKEN}\fakesc{BIT}, CBMC}\hfil}
+      \vskip0.5em%
+      \hbox to \hsize{\hfill\tiny see \url{http://sv-comp.sosy-lab.org}}%
+      \vskip-1cm%
+    }}
+    \begin{frame}{Competition on Software Verification}
+      \begin{itemize}
+        \item Library of benchmarks in C
+        \item Categories: {\tiny BitVectors, Concurrency, ControlFlow, DeviceDrivers, MemorySafety, Recursive, \ldots}
+        \item TACAS'14
+      \end{itemize}
+      \definecolor{gold}{HTML}{FFD700}
+      \definecolor{silver}{HTML}{C0C0C0}
+      \definecolor{bronze}{HTML}{8C7853}
+      \def\fst{\cellcolor{gold}}
+      \def\snd{\cellcolor{silver}}
+      \def\trd{\cellcolor{bronze}}
+      \centering
+      \scalebox{0.75}{\vbox{
+        \begin{tabular}{p{1.2cm}p{1cm}p{2cm}p{1cm}p{1cm}}
+                                   & \fakesc{BLAST}      & \fakesc{{CPA}CHECKER} & \fakesc{UFO}        & BMC*                \\
+          \multirow{2}{*}{BV}      & \multirow{2}{*}{--} & \trd\tiny 78          & \multirow{2}{*}{--} & \fst\tiny 86        \\
+                                   &                     & \trd\tiny 690s        &                     & \fst\tiny 39s       \\
+          \multirow{2}{*}{CF}      & \tiny 508           & \fst\tiny 1\ 009      & \trd\tiny 912       & \snd\tiny 986       \\
+                                   & \tiny 32\ 000s      & \fst\tiny 9\ 000s     & \trd\tiny 14\ 000s  & \snd\tiny 6\ 300s   \\
+          \multirow{2}{*}{DD}      & \fst\tiny 2\ 682    & \tiny 2\ 613          & \snd\tiny 2\ 642    & \trd\tiny 2\ 639    \\
+                                   & \fst\tiny 13\ 000s  & \tiny 28\ 000s        & \snd\tiny 5\ 700s   & \trd\tiny 3\ 000s   \\
+          \\
+          \multirow{2}{*}{Overall} & \multirow{2}{*}{--} & \snd\tiny 2\ 987      & \multirow{2}{*}{--} & \fst\tiny 3\ 501    \\
+                                   &                     & \snd\tiny 48\ 000s    &                     & \fst\tiny 560\ 000s \\
+        \end{tabular}
+      }}
+    \end{frame}
+  }
+
   \begin{frame}{Wrap Up}
-    might maybe mention sv-comp
   \end{frame}
 \end{document}
