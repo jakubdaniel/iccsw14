@@ -75,6 +75,11 @@
   \end{pgfpicture}%
 ]}
 
+\let\oldtitle\title
+\def\title#1{\oldtitle{#1}\gdef\insertfancytitle{#1}\gdef\insertrunningtitle{#1}}
+\def\fancytitle#1{\gdef\insertfancytitle{#1}}
+\def\runningtitle#1{\gdef\insertrunningtitle{#1}}
+
 \usetikzlibrary{positioning,calc}
 \tikzset{%
   onslide/.code args={<#1>#2}{%
@@ -238,7 +243,7 @@
 
 \setbeamertemplate{title page}{%
   \vbox to 1.5cm {%
-    \shadowoffset{0.75pt}\shadowtext{\parbox{\textwidth}{\centering \bf \fontsize{24}{2em}\selectfont \inserttitle}}%
+    \shadowoffset{0.75pt}\shadowtext{\parbox{\textwidth}{\centering \bf \fontsize{24}{2em}\selectfont \insertfancytitle}}%
   }%
   \vspace{2em}%
   \colorbox{gray}{%
@@ -294,7 +299,7 @@
         \fi%
         \scalebox{0.6}{\csname beamer@D3S@event \endcsname, \csname beamer@D3S@date \endcsname}%
         \hfill%
-        \scalebox{0.6}{\bf \inserttitle}%
+        \scalebox{0.6}{\bf \insertrunningtitle}%
         \hfill%
         \hbox to 1cm {\hfill  \scalebox{0.6}{\insertframenumber}}%
         \hspace{1em}%

@@ -23,7 +23,9 @@
     escapeinside={(*}{*)}
 }
 
-\title{Predicate Abstraction in Program Verification}
+\title{Predicate Abstraction in Program Verification: Survey and Current Trends}
+\fancytitle{\vbox{\vskip-0.5em Predicate Abstraction in Program Verification:\\{\LARGE Survey and Current Trends}}}
+\runningtitle{Predicate Abstraction in Program Verification}
 \author{{\slshape \bfseries Jakub Daniel}, Pavel Parízek}
 
 \def\fakesc#1{\fakecap#1\egroup}
@@ -32,15 +34,58 @@
 \begin{document}
   \titleframe
 
+  {
+    \usebackgroundtemplate{
+      \vbox{
+        \vskip2cm\hbox to \hsize{\hfill\includegraphics{slides1.mps}}
+      }
+    }
+    \begin{frame}{Motivation}
+      \begin{itemize}
+        \itemsep=2em
+        \item Software is ubiquitous
+        \item Bugs tend to be costly
+        \item Testing is not enough
+        \item Model checking is expensive
+      \end{itemize}
+    \end{frame}
+  }
+
+  \begin{frame}[fragile]{Example Target Program}
+    \begin{itemize}
+      \item \ldots
+        \begin{lstlisting}
+unsigned int n = (*\bf\color{darkblue} *{}*);
+unsigned int i = sn = 0;
+
+for (i = 1; i <= n; ++i) {
+    if (i < 10) {
+        sn += 2;
+    }
+}
+
+assert sn == 2 * n || n == 0;
+\end{lstlisting}
+\item \ldots
+\end{itemize}
+\end{frame}
+
+  \begin{frame}{Abstraction Model Checking}
+    \begin{itemize}
+      \item Smaller state space
+      \item Predicate Abstraction
+    \end{itemize}
+  \end{frame}
+
   \begin{frame}{Outline}
     \begin{columns}
       \begin{column}{0.45\textwidth}
         \begin{itemize}
-          \item Motivation
-          \item Abstract Model Checking
+          \item Predicate Abstraction
           \item Abstraction Refinement
           \item Lazy Abstraction
           \item \fakesc{IMPACT} Algorithm
+          \item Further Enhancements
         \end{itemize}
       \end{column}
       \begin{column}{0.45\textwidth}
@@ -58,85 +103,82 @@
     \end{columns}
   \end{frame}
 
-  {
-    \usebackgroundtemplate{
-      \vbox{
-        \vskip2cm\hbox to \hsize{\hfill\includegraphics{slides1.mps}}
-      }
-    }
-    \begin{frame}{Motivation}
-      \begin{itemize}
-        \itemsep=2em
-        \item Software is ubiquitous
-        \item Bugs tend to be costly
-        \item Testing is not enough
-        \item Explicit model checking is expensive
-      \end{itemize}
-    \end{frame}
-  }
-
-  \begin{frame}[fragile]{Example Target Program}
+  \begin{frame}{Predicate Abstraction}
     \begin{itemize}
-      \item \ldots
-        \begin{lstlisting}
-unsigned int n = (*\bf\color{darkblue} *{}*);
-unsigned int x = n, y = 0;
+      \item No concrete values
+      \item Data abstracted with predicates: {\tt x.f > 3}
+      \item Statements are interpreted with respect to effects on predicate valuations
+    \end{itemize}
+  \end{frame}
 
-while (x > 0) {
-    --x;
-    ++y;
-}
-
-assert y != n;
-\end{lstlisting}
-\item \ldots
-\end{itemize}
-\end{frame}
-
-  \begin{frame}{Abstraction Model Checking}
+  \begin{frame}{Abstraction Refinement}
     \begin{itemize}
-      \item Smaller state space
-      \item Predicate Abstraction
-
-        {\tt x.f > 3}
+      \item Counterexamples may be infeasible
+      \item TODO img TRACE FORMULA, INTERPOLANTS (+sketch what an interpolant is)
     \end{itemize}
   \end{frame}
 
   {
     \usebackgroundtemplate{
       \vbox{
-        \vskip2cm\hbox to \hsize{\hfill\includegraphics[scale=0.9]{slides2.mps}}
+        \vskip1.75cm\hbox to \hsize{\hfill\includegraphics[scale=0.8]{slides2.mps}\hskip-0.5cm}
       }
     }
-    \begin{frame}{Abstraction Refinement}
-      CEGAR
+    \begin{frame}{Counterexample-Guided Abstraction Refinement}
+      \begin{itemize}
+        \itemsep=1.5em
+        \item Begin with no predicates
+        \item Explore state space
+        \item Safe if no counterexample is found
+        \item Check feasibility of counterexamples
+        \item Exclude infeasible traces by refinement
+        \item Report any feasible counterexample
+      \end{itemize}
     \end{frame}
   }
 
   \begin{frame}{Lazy Abstraction}
+    \begin{itemize}
+      \item TODO img statespace (explored), counterexample, refinement, no need to explore things twice
+    \end{itemize}
   \end{frame}
 
   \subtitleframe{\fakesc{B\Large{}LAST} \\ \vskip1em \small (Lazy Predicate Abstraction)}
 
   \begin{frame}{\fakesc{I\large{}MPACT} Algorithm}
+    \begin{itemize}
+      \item Not necessary to compute abstract post operator at all, just refine (go forward blindly)
+      \item According to some comparison (Beyer) not very different from Lazy
+    \end{itemize}
   \end{frame}
 
   \subtitleframe{\fakesc{W\Large{}OLVERINE} \\ \vskip1em \small (Even Lazier Predicate Abstraction - \fakesc{IMPACT} Algorithm)}
 
   \begin{frame}{Further Enhancements}
+    \begin{itemize}
+      \item Block encoding
+      \item Refinement (do not simply refine along single trace)
+    \end{itemize}
   \end{frame}
 
   \subtitleframe{\fakesc{{CPA}\Large{}CHECKER} \\ \vskip1em \small (Configurable Verification Platform)}
   \subtitleframe{\fakesc{U\Large{}FO} \\ \vskip1em \small (Verification Framework)}
 
   \begin{frame}{Our Research}
+    \begin{itemize}
+      \item \ldots
+    \end{itemize}
   \end{frame}
 
   \subtitleframe{\fakesc{P\Large{}ANDA} \\ \vskip1em \small \url{https://github.com/d3sformal/panda.git}}
 
   {
     \usebackgroundtemplate{\vbox to \vsize{\vfill\hbox to \hsize{\hfill\tiny see \url{https://github.com/d3sformal/panda.git}}\vskip-1cm}}
-    \begin{frame}{\fakesc{P\large{}ANDA}}
+    \begin{frame}{\fakesc{P\large{}ANDA}: {\large{}Predicate Abstraction in Dynamic Analysis}}
+      \begin{itemize}
+        \item Verification tool for Java
+        \item Built on top of Java Pathfinder
+      \end{itemize}
     \end{frame}
   }
 

@@ -31,3 +31,12 @@
 !method1.pred
 !method2.java
 !method2.pred
+
+!presentation
+!presentation/blast.sh
+!presentation/blast_svcomp.c
+!presentation/wolverine.sh
+!presentation/cpa.sh
+!presentation/ufo.sh
+!presentation/sum01_false.c
+!presentation/sum01_false-alt.c
