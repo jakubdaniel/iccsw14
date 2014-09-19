@@ -51,31 +51,63 @@
     \end{frame}
   }
 
-  \begin{frame}[fragile]{Example Target Program}
-    \begin{itemize}
-      \item \ldots
-        \begin{lstlisting}
-unsigned int n = (*\bf\color{darkblue} *{}*);
-unsigned int i = sn = 0;
-
-for (i = 1; i <= n; ++i) {
-    if (i < 10) {
-        sn += 2;
+  {
+    \usebackgroundtemplate{
+      \vbox{
+        \vskip2cm\hbox to \hsize{\hfill\includegraphics[scale=0.6]{slides3.mps}\hskip-0.5cm}
+      }
     }
-}
+    \begin{frame}[fragile]{Example Target Program}
+      \begin{lstlisting}
+  unsigned int n = (*\bf\color{darkblue} *{}*);
+  unsigned int i = s = 0;
 
-assert sn == 2 * n || n == 0;
+  for (i = 1; i <= n; ++i) {
+      if (i < (*$\text{2}^\text{31}$*)) {
+          s += 2;
+      }
+  }
+
+  assert s == 2 * n || n == 0;
 \end{lstlisting}
-\item \ldots
+\begin{itemize}
+\item Explore the entire state space
+  \begin{itemize}
+    \item Model Checking
+    \item State space too large
+  \end{itemize}
 \end{itemize}
 \end{frame}
+  }
 
-  \begin{frame}{Abstraction Model Checking}
-    \begin{itemize}
-      \item Smaller state space
-      \item Predicate Abstraction
-    \end{itemize}
-  \end{frame}
+  {
+    \usebackgroundtemplate{
+      \vbox{
+        \vskip2cm\hbox to \hsize{\hfill\includegraphics[scale=0.6]{slides4.mps}\hskip-0.5cm}
+      }
+    }
+    \begin{frame}[fragile]{Abstraction Model Checking}
+      \begin{lstlisting}
+  unsigned int n = (*\bf\color{darkblue} *{}*);
+  unsigned int i = s = 0;
+
+  for (i = 1; i <= n; ++i) {
+      if (i < (*$\text{2}^\text{31}$*)) {
+          s += 2;
+      }
+  }
+
+  assert s == 2 * n || n == 0;
+\end{lstlisting}
+\begin{itemize}
+\item Smaller state space
+  \begin{itemize}
+    \item Handle multiple states at once
+  \end{itemize}
+\item Predicate Abstraction
+\end{itemize}
+\end{frame}
+  }
 
   \begin{frame}{Outline}
     \begin{columns}
@@ -105,18 +137,51 @@ assert sn == 2 * n || n == 0;
 
   \begin{frame}{Predicate Abstraction}
     \begin{itemize}
+      \itemsep=2em
       \item No concrete values
       \item Data abstracted with predicates: {\tt x.f > 3}
-      \item Statements are interpreted with respect to effects on predicate valuations
+      \item Statements interpreted with respect to effects on predicate values
     \end{itemize}
   \end{frame}
 
-  \begin{frame}{Abstraction Refinement}
-    \begin{itemize}
-      \item Counterexamples may be infeasible
-      \item TODO img TRACE FORMULA, INTERPOLANTS (+sketch what an interpolant is)
-    \end{itemize}
-  \end{frame}
+  {
+    \usebackgroundtemplate{
+      \vbox{
+        %\vskip1.75cm\hbox to \hsize{\hfill\includegraphics[scale=0.75]{slides5.mps}\hskip-0.5cm}
+      }
+    }
+    \begin{frame}{Abstraction Refinement}
+      \begin{itemize}
+        \item Counterexamples may be infeasible
+        \item Check {\color{darkgreen}SAT} of logical formula encoding trace
+          \begin{itemize}
+            \item SMT solver for theory of arrays ({\tt QF\_LIA, QF\_BVA})
+            \item {\color{darkred}UNSAT} $\text{A} \wedge \text{B}$ gives interpolant I used to refine abstraction
+              \begin{itemize}
+                \item $\text{A} \Rightarrow \text{I}$
+                \item $\text{I} \wedge \text{B}$ UNSAT
+                \item $\mathcal{L}\!\left(\text{I}\right) \subset \mathcal{L}\!\left(\text{A}\right) \cap \mathcal{L}\!\left(\text{B}\right)$
+              \end{itemize}
+          \end{itemize}
+      \end{itemize}
+      \vskip2em
+      \includegraphics<1>[scale=0.7]{slides6.mps}
+      \includegraphics<2>[scale=0.7]{slides7.mps}
+      \includegraphics<3>[scale=0.7]{slides8.mps}
+      \includegraphics<4>[scale=0.7]{slides9.mps}
+      \includegraphics<5>[scale=0.7]{slides10.mps}
+      \includegraphics<6>[scale=0.7]{slides11.mps}
+      \includegraphics<7>[scale=0.7]{slides12.mps}
+      \includegraphics<8>[scale=0.7]{slides13.mps}
+      \includegraphics<9>[scale=0.7]{slides14.mps}
+      \includegraphics<10>[scale=0.7]{slides15.mps}
+      \includegraphics<11>[scale=0.7]{slides16.mps}
+      \includegraphics<12>[scale=0.7]{slides17.mps}
+      \includegraphics<13>[scale=0.7]{slides18.mps}
+      \includegraphics<14>[scale=0.7]{slides19.mps}
+      \includegraphics<15>[scale=0.7]{slides20.mps}
+    \end{frame}
+  }
 
   {
     \usebackgroundtemplate{
@@ -193,7 +258,7 @@ assert sn == 2 * n || n == 0;
     \begin{frame}{Competition on Software Verification}
       \begin{itemize}
         \item Library of benchmarks in C
-        \item Categories: {\tiny BitVectors, Concurrency, ControlFlow, DeviceDrivers, MemorySafety, Recursive, \ldots}
+        \item Categories: {\scriptsize BitVectors, ControlFlow, DeviceDrivers, Recursive, Concurrency, \ldots}
         \item TACAS'14
       \end{itemize}
       \definecolor{gold}{HTML}{FFD700}
