@@ -1,0 +1,47 @@
+\pdfminorversion=4
+
+\documentclass{beamer}
+
+\def\event{{ICCSW'14}}
+
+\ifdefined\withcomments
+  \usetheme[event=\event,footlineauthor,comments]{D3S}
+\else
+  \usetheme[event=\event,footlineauthor]{D3S}
+\fi
+
+\usepackage{multirow}
+
+\title{Predicate Abstraction in Program Verification: Survey and Current Trends}
+\fancytitle{\vbox{\vskip-0.5em Predicate Abstraction in Program Verification:\\{\LARGE Survey and Current Trends}}}
+\runningtitle{Predicate Abstraction in Program Verification}
+\author{{\bfseries Jakub Daniel}, Pavel Parízek}
+
+\def\fakesc#1{\fakecap#1\egroup}
+\def\fakecap#1{#1\bgroup\scriptsize}
+
+\begin{document}
+  \titleframe
+
+  \begin{frame}{\ldots 10, 9, 8 \ldots}
+    \begin{itemize}
+      \itemsep=1.2em
+      \item Predicate Abstraction
+        \begin{itemize}
+          \item Counterexample-Guided Abstraction Refinement
+          \item Lazy Abstraction
+          \item \fakesc{IMPACT} Algorithm
+          \item Further Enhancements
+        \end{itemize}
+      \item Short demo of existing tools
+        \begin{itemize}
+          \item \fakesc{BLAST}
+          \item \fakesc{WOLVERINE}
+          \item \fakesc{{CPA}CHECKER}
+          \item \fakesc{UFO}
+        \end{itemize}
+      \item Our research ideas
+      \item Comparison of tools
+    \end{itemize}
+  \end{frame}
+\end{document}

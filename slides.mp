@@ -413,6 +413,93 @@ beginfig(20)
     setbounds currentpicture to bbox itvii;
 endfig;
 
+picture lz, li, lii, liii, liv;
+
+lz := image(
+  draw edge(( 0u,  0u), (-2u, -1u), btex etex, darkblue);
+  draw edge((-2u, -1u), (-3u, -2u), btex etex, darkblue);
+  draw edge((-2u, -1u), (-1u, -2u), btex etex, darkblue);
+
+  draw nonedge((-3u, -2u), (-4u, -3u), btex etex, darkblue);
+  draw nonedge((-3u, -2u), (-2u, -3u), btex etex, darkblue);
+
+  draw nonedge((-1u, -2u), (-2u, -3u), btex etex, darkblue);
+  draw nonedge((-1u, -2u), ( 0u, -3u), btex etex, darkblue);
+
+  draw node(( 0u,  0u), btex etex, darkblue, blue);
+  draw node((-2u, -1u), btex etex, darkblue, blue);
+  draw node((-3u, -2u), btex etex, darkblue, blue);
+  draw node((-1u, -2u), btex etex, darkblue, blue);
+);
+
+li := image(
+  draw lz;
+
+  draw edge(( 0u,  0u), ( 2u, -1u), btex etex, darkblue);
+  draw nonedge(( 1u, -2u), ( 1u, -4u), btex etex, darkblue);
+  draw nonedge(( 2u, -1u), ( 3u, -2u), btex etex, darkblue);
+  draw edge(( 2u, -1u), ( 1u, -2u), btex etex, darkblue);
+
+  draw node(( 1u, -2u), btex etex, darkblue, blue);
+  draw node(( 1u, -4u), btex etex, darkred,  red);
+  draw node(( 2u, -1u), btex etex, darkblue, blue);
+
+  draw fullcircle scaled 1.5u shifted (1u, -4u) withpen pencircle scaled 1.5 withcolor darkred dashed dashpattern(off 0.375 on 0.375u off 0.375u);
+  draw ((1u, -4u)--(1u + 1.5u, -4u + sind(12.5)/cosd(12.5) * 1.5u) cutbefore (fullcircle scaled 1.5u shifted (1u, -4u))) withpen pencircle scaled 1.5 withcolor darkred;
+  label.rt(btex \sf\bfseries Spurious Error etex, (1u + 1.5u, -4u + sind(12.5)/cosd(12.5) * 1.5u)) withcolor darkred;
+);
+
+lii := image(
+  draw lz;
+
+  draw edge(( 0u,  0u), ( 2u, -1u), btex etex, darkgray);
+  draw nonedge(( 1u, -2u), ( 1u, -4u), btex etex, darkgray);
+  draw edge(( 2u, -1u), ( 1u, -2u), btex etex, darkgray);
+  draw nonedge((4u, -1u), (2.5u, -2.125u), btex etex, darkblue);
+  draw nonedge((4u, -1u), (5.5u, -2.125u), btex etex, darkblue);
+
+  drawarrow ((0u, 0u)--(0.5u, -0.25u){dir -30}..(2u, -0.25u)..(4u, -1u) cutbefore (fullcircle scaled (u + 1.5)) cutafter (fullcircle scaled (u + 1.5) shifted (4u, -1u))) withpen pencircle scaled 1.5 withcolor darkblue;
+
+  draw node(( 1u, -2u), btex etex, darkgray, gray);
+  draw node(( 2u, -1u), btex etex, darkgray, gray);
+  draw node(( 4u, -1u), btex etex, darkblue, blue);
+  draw node(( 1u, -4u), btex etex, 0.75darkgray + 0.25darkred,  0.75gray + 0.25red);
+);
+
+liii := image(
+  draw lii;
+
+  draw fullcircle scaled 1.5u shifted (4u, -1u) withpen pencircle scaled 1.5 withcolor darkgreen dashed dashpattern(off 0.375 on 0.375u off 0.375u);
+  draw ((4u, -1u)--(4u + 1.5u, -1u + sind(12.5)/cosd(12.5) * 1.5u) cutbefore (fullcircle scaled 1.5u shifted (4u, -1u))) withpen pencircle scaled 1.5 withcolor darkgreen;
+  label.rt(btex \sf\bfseries Continue etex, (4u + 1.5u, -1u + sind(12.5)/cosd(12.5) * 1.5u)) withcolor darkgreen;
+);
+
+liv := image(
+  draw lii;
+
+  draw (fullcircle scaled 3.5u rotated 15 shifted (-2u, -1.75u)) withpen pencircle scaled 1.5 withcolor darkgreen dashed dashpattern(on 0.375u off 0.375u);
+  draw ((-2u, -1.75u)--(-2u - 3u, -1.75u + sind(12.5)/cosd(12.5) * 3u) cutbefore (fullcircle scaled 3.5u shifted (-2u, -1.75u))) withpen pencircle scaled 1.5 withcolor darkgreen;
+  label.lft(btex \sf\bfseries Keep etex, (-2u - 3u, -1.75u + sind(12.5)/cosd(12.5) * 3u)) withcolor darkgreen;
+);
+
+beginfig(21)
+    draw li;
+
+    setbounds currentpicture to bbox(image(draw li; draw lii; draw liii; draw liv;));
+endfig;
+
+beginfig(22)
+    draw liii;
+
+    setbounds currentpicture to bbox(image(draw li; draw lii; draw liii; draw liv;));
+endfig;
+
+beginfig(23)
+    draw liv;
+
+    setbounds currentpicture to bbox(image(draw li; draw lii; draw liii; draw liv;));
+endfig;
+
 end
 
 verbatimtex

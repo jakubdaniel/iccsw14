@@ -20,7 +20,7 @@
 \title{Predicate Abstraction in Program Verification: Survey and Current Trends}
 \fancytitle{\vbox{\vskip-0.5em Predicate Abstraction in Program Verification:\\{\LARGE Survey and Current Trends}}}
 \runningtitle{Predicate Abstraction in Program Verification}
-\author{{\slshape \bfseries Jakub Daniel}, Pavel Parízek}
+\author{{\bfseries Jakub Daniel}, Pavel Parízek}
 
 \def\fakesc#1{\fakecap#1\egroup}
 \def\fakecap#1{#1\bgroup\scriptsize}
@@ -36,7 +36,7 @@
     }
     \begin{frame}{Motivation}
       \begin{itemize}
-        \itemsep=2em
+        \itemsep=1.5em
         \item Software is ubiquitous
         \item Bugs tend to be costly
         \item Testing is not enough
@@ -131,10 +131,13 @@
 
   \begin{frame}{Predicate Abstraction}
     \begin{itemize}
-      \itemsep=2em
+      \itemsep=1.5em
       \item No concrete values
-      \item Data abstracted with predicates: {\tt x.f > 3}
+      \item Data abstracted with predicates: {\tt x.f > 3}, {\tt x = y}
       \item Statements interpreted with respect to effects on predicate values
+        \begin{itemize}
+          \item In sense of Hoare logic
+        \end{itemize}
     \end{itemize}
   \end{frame}
 
@@ -151,16 +154,21 @@
         \item Check {\color{darkgreen}SAT} of logical formula encoding trace
           \begin{itemize}
             \item SMT solver for theory of arrays ({\tt QF\_LIA, QF\_BVA})
+            \item Proof of {\color{darkred}UNSAT} yields interpolants
           \end{itemize}
       \end{itemize}
-      {\scriptsize
-         Interpolant I for $\varphi \equiv \text{A} \wedge \text{B} \equiv \bot$:
-         \begin{itemize}
-           \item {\tiny $\text{A} \Rightarrow \text{I}$}
-           \item {\tiny $\text{I} \wedge \text{B} \equiv \bot$}
-           \item {\tiny $\mathcal{L}\!\left(\text{I}\right) \subseteq \mathcal{L}\!\left(\text{A}\right) \cap \mathcal{L}\!\left(\text{B}\right)$}
-         \end{itemize}
-      }
+      \vskip2em
+      \begin{center}
+        \begin{minipage}{6cm}
+          \scriptsize
+          Interpolant I for $\varphi \equiv \text{A} \wedge \text{B} \equiv \bot$:
+          \begin{itemize}
+            \item \parbox{2.5cm}{\tiny $\text{A} \Rightarrow \text{I}$}{\color{gray} Overapproximation}
+            \item \parbox{2.5cm}{\tiny $\text{I} \wedge \text{B} \equiv \bot$}{\color{gray} Refutation}
+            \item \parbox{2.5cm}{\tiny $\mathcal{L}\!\left(\text{I}\right) \subseteq \mathcal{L}\!\left(\text{A}\right) \cap \mathcal{L}\!\left(\text{B}\right)$}{\color{gray} Live variables only}
+          \end{itemize}
+        \end{minipage}
+      \end{center}
     \end{frame}
   }
 
@@ -220,7 +228,7 @@ assert @9s == 2 * n@ || n == 0;
 {\color{gray}\only<6>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{1} = \text{s}_\text{2}$} \\
 {\color{gray}\only<6,7>{\color{darkgreen}}$\text{2} \cdot \text{n}_\text{1} \ge \text{s}_\text{2}$} \\
 {\color{gray}\only<7>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{2} - \text{2} = \text{s}_\text{2}$} \\
-{\color{gray}\only<8,9>{\color{darkgreen}}\only<9>{\bf}$\text{2} \cdot \text{n}_\text{1} = \text{s}_\text{2}$} \\
+{\color{gray}\only<8,9>{\color{darkgreen}}\only<9>{\bfseries}$\text{2} \cdot \text{n}_\text{1} = \text{s}_\text{2}$} \\
 \end{column}
 \end{columns}
 \vskip1em
@@ -248,45 +256,86 @@ assert @9s == 2 * n@ || n == 0;
 
   \begin{frame}{Lazy Abstraction}
     \begin{itemize}
-      \item TODO img statespace (explored), counterexample, refinement, no need to explore things twice
+      \item Observation: Parts of state space checked many times in CEGAR
+      \item Unroll program CFG into \emph{Abstract Reachability Graph}
+      \item Refine only subtrees
     \end{itemize}
+    \begin{center}
+      \includegraphics<1>[scale=0.75]{slides21.mps}
+      \includegraphics<3>[scale=0.75]{slides22.mps}
+      \includegraphics<2>[scale=0.75]{slides23.mps}
+    \end{center}
   \end{frame}
 
-  \subtitleframe{\fakesc{B\Large{}LAST} \\ \vskip1em \small (Lazy Predicate Abstraction)}
+  \subtitleframe{\fakesc{B\Large{}LAST} \\ \vskip1em \color{darkgray} \small (Lazy Predicate Abstraction)}
 
-  \begin{frame}{\fakesc{I\large{}MPACT} Algorithm}
-    \begin{itemize}
-      \item Not necessary to compute abstract post operator at all, just refine (go forward blindly)
-      \item According to some comparison (Beyer) not very different from Lazy
-    \end{itemize}
-  \end{frame}
+  {
+    \usebackgroundtemplate{%
+      \vbox to \vsize{%
+        \vfill%
+        \hskip0.075\hsize\hbox to 1em{\tiny [1]}\hbox to 0.8\hsize{\tiny D. Beyer and P. Wendler. Algorithms for software model checking: Predicate Abstraction vs. Impact.\hfil}%
+        \vskip0.25em%
+        \hskip0.075\hsize\hskip1em\hbox to 0.8\hsize{\tiny In Proceedings of FMCAD 2012, IEEE.\hfil}%
+        \vskip-1cm%
+      }%
+    }
+    \begin{frame}{\fakesc{I\large{}MPACT} Algorithm}
+      \begin{itemize}
+        \itemsep=1.5em
+        \item Observation: Forward abstraction is unnecessary and expensive
+        \item Overapproximate reachable states with {\tt true}
+        \item Offload construction of precise abstraction to refinement step
+        \item Comparable to Lazy Abstraction [1]
+      \end{itemize}
+    \end{frame}
+  }
 
-  \subtitleframe{\fakesc{W\Large{}OLVERINE} \\ \vskip1em \small (Even Lazier Predicate Abstraction - \fakesc{IMPACT} Algorithm)}
+  \subtitleframe{\fakesc{W\Large{}OLVERINE} \\ \vskip1em \color{darkgray} \small (Even Lazier Predicate Abstraction - \fakesc{IMPACT} Algorithm)}
 
   \begin{frame}{Further Enhancements}
     \begin{itemize}
-      \item Block encoding
-      \item Refinement (do not simply refine along single trace)
+      \itemsep=1.5em
+      \item Observation: Refinement steps are expensive
+      \item Change step granularity - \emph{Block Encoding}
+        \begin{itemize}
+          \item Single-block Encoding
+          \item Large-block Encoding
+          \item Adjustable-block Encoding
+        \end{itemize}
+      \item Refine along multiple traces at once
+        \begin{itemize}
+          \item Encode Abstract Reachability Graph into a trace
+        \end{itemize}
     \end{itemize}
   \end{frame}
 
-  \subtitleframe{\fakesc{{CPA}\Large{}CHECKER} \\ \vskip1em \small (Configurable Verification Platform)}
-  \subtitleframe{\fakesc{U\Large{}FO} \\ \vskip1em \small (Verification Framework)}
+  \subtitleframe{\fakesc{{CPA}\Large{}CHECKER} \\ \vskip1em \color{darkgray} \small (Configurable Verification Platform)}
+  \subtitleframe{\fakesc{U\Large{}FO} \\ \vskip1em \color{darkgray} \small (Verification Framework)}
 
   \begin{frame}{Our Research}
     \begin{itemize}
-      \item \ldots
+      \itemsep=1.5em
+      \item Use concrete interpretation to improve precision
+      \item Use abstraction to reduce state space
+      \item Bring verification to higher-level languages such as Java
+        \begin{itemize}
+          \item Objects, Collections
+          \item Threads
+          \item \ldots
+        \end{itemize}
     \end{itemize}
   \end{frame}
 
-  \subtitleframe{\fakesc{P\Large{}ANDA} \\ \vskip1em \small \url{https://github.com/d3sformal/panda.git}}
+  \subtitleframe{\fakesc{P\Large{}ANDA} \\ \vskip1em \color{darkgray} \small \url{https://github.com/d3sformal/panda.git}}
 
   {
     \usebackgroundtemplate{\vbox to \vsize{\vfill\hbox to \hsize{\hfill\tiny see \url{https://github.com/d3sformal/panda.git}}\vskip-1cm}}
     \begin{frame}{\fakesc{P\large{}ANDA}: {\large{}Predicate Abstraction in Dynamic Analysis}}
       \begin{itemize}
-        \item Verification tool for Java
+        \itemsep=1em
+        \item Verification tool for Java bytecode
         \item Built on top of Java Pathfinder
+        \item Combines concrete and abstract interpretation
       \end{itemize}
     \end{frame}
   }
@@ -329,6 +378,6 @@ assert @9s == 2 * n@ || n == 0;
     \end{frame}
   }
 
-  \begin{frame}{Wrap Up}
-  \end{frame}
+  %\begin{frame}{Wrap Up}
+  %\end{frame}
 \end{document}
