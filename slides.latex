@@ -15,13 +15,7 @@
 \usepackage{listings}
 \usepackage{multirow}
 
-\lstset{
-    language=C,
-    keywords=[2]{assert},
-    keywordstyle=\color{darkblue}\bfseries,
-    keywordstyle=[2]{\color{darkred}\bfseries},
-    escapeinside={(*}{*)}
-}
+\definecolor{d3s_keyword}{RGB}{0, 112, 192}
 
 \title{Predicate Abstraction in Program Verification: Survey and Current Trends}
 \fancytitle{\vbox{\vskip-0.5em Predicate Abstraction in Program Verification:\\{\LARGE Survey and Current Trends}}}
@@ -58,7 +52,7 @@
       }
     }
     \begin{frame}[fragile]{Example Target Program}
-      \begin{lstlisting}
+      \begin{lstlisting}[language=MyC]
   unsigned int n = (*\bf\color{darkblue} *{}*);
   unsigned int i = s = 0;
 
@@ -87,7 +81,7 @@
       }
     }
     \begin{frame}[fragile]{Abstraction Model Checking}
-      \begin{lstlisting}
+      \begin{lstlisting}[language=MyC]
   unsigned int n = (*\bf\color{darkblue} *{}*);
   unsigned int i = s = 0;
 
@@ -152,36 +146,86 @@
     }
     \begin{frame}{Abstraction Refinement}
       \begin{itemize}
+        \itemsep=1em
         \item Counterexamples may be infeasible
         \item Check {\color{darkgreen}SAT} of logical formula encoding trace
           \begin{itemize}
             \item SMT solver for theory of arrays ({\tt QF\_LIA, QF\_BVA})
-            \item {\color{darkred}UNSAT} $\text{A} \wedge \text{B}$ gives interpolant I used to refine abstraction
-              \begin{itemize}
-                \item $\text{A} \Rightarrow \text{I}$
-                \item $\text{I} \wedge \text{B}$ UNSAT
-                \item $\mathcal{L}\!\left(\text{I}\right) \subset \mathcal{L}\!\left(\text{A}\right) \cap \mathcal{L}\!\left(\text{B}\right)$
-              \end{itemize}
           \end{itemize}
       \end{itemize}
-      \vskip2em
-      \includegraphics<1>[scale=0.7]{slides6.mps}
-      \includegraphics<2>[scale=0.7]{slides7.mps}
-      \includegraphics<3>[scale=0.7]{slides8.mps}
-      \includegraphics<4>[scale=0.7]{slides9.mps}
-      \includegraphics<5>[scale=0.7]{slides10.mps}
-      \includegraphics<6>[scale=0.7]{slides11.mps}
-      \includegraphics<7>[scale=0.7]{slides12.mps}
-      \includegraphics<8>[scale=0.7]{slides13.mps}
-      \includegraphics<9>[scale=0.7]{slides14.mps}
-      \includegraphics<10>[scale=0.7]{slides15.mps}
-      \includegraphics<11>[scale=0.7]{slides16.mps}
-      \includegraphics<12>[scale=0.7]{slides17.mps}
-      \includegraphics<13>[scale=0.7]{slides18.mps}
-      \includegraphics<14>[scale=0.7]{slides19.mps}
-      \includegraphics<15>[scale=0.7]{slides20.mps}
+      {\scriptsize
+         Interpolant I for $\varphi \equiv \text{A} \wedge \text{B} \equiv \bot$:
+         \begin{itemize}
+           \item {\tiny $\text{A} \Rightarrow \text{I}$}
+           \item {\tiny $\text{I} \wedge \text{B} \equiv \bot$}
+           \item {\tiny $\mathcal{L}\!\left(\text{I}\right) \subseteq \mathcal{L}\!\left(\text{A}\right) \cap \mathcal{L}\!\left(\text{B}\right)$}
+         \end{itemize}
+      }
     \end{frame}
   }
+
+  \begin{frame}[fragile]{Abstraction Refinement - Example}
+    \begin{lstlisting}[language=MyC,basicstyle=\tiny\tt]
+  unsigned int n = (*\bf\color{d3s_keyword} *{}*);
+  unsigned int i = @2s = 0@;
+
+  for (@3i = 1@; @4@8i <= n@@; @7++i@) {
+      if ((*\btHL<5>{i < $\text{2}^\text{31}$}*)) {
+          @6s += 2@;
+      }
+  }
+
+  assert @9s == 2 * n@ || n == 0;
+\end{lstlisting}
+\vskip1em
+\invisible{\includegraphics<1>[scale=0.7]{slides6.mps}} % Reserve space
+\includegraphics<2>[scale=0.7]{slides6.mps}
+\includegraphics<3>[scale=0.7]{slides7.mps}
+\includegraphics<4>[scale=0.7]{slides8.mps}
+\includegraphics<5>[scale=0.7]{slides9.mps}
+\includegraphics<6>[scale=0.7]{slides10.mps}
+\includegraphics<7>[scale=0.7]{slides11.mps}
+\includegraphics<8>[scale=0.7]{slides12.mps}
+\includegraphics<9>[scale=0.7]{slides13.mps}
+\includegraphics<10>[scale=0.7]{slides14.mps}
+\includegraphics<11>[scale=0.7]{slides15.mps}
+\includegraphics<12>[scale=0.7]{slides16.mps}
+\includegraphics<13>[scale=0.7]{slides17.mps}
+\includegraphics<14>[scale=0.7]{slides18.mps}
+\includegraphics<15>[scale=0.7]{slides19.mps}
+\includegraphics<16>[scale=0.7]{slides20.mps}
+\end{frame}
+
+  \begin{frame}[fragile]{Abstraction Refinement - Example Continued}
+    \begin{columns}
+      \begin{column}{0.50\textwidth}
+    \begin{lstlisting}[language=MyC]
+unsigned int n = (*\bf\color{d3s_keyword} *{}*);
+unsigned int i = @2s = 0@;
+
+for (@3i = 1@; @4@8i <= n@@; @7++i@) {
+    if ((*\btHL<5>{i < $\text{2}^\text{31}$}*)) {
+        @6s += 2@;
+    }
+}
+
+assert @9s == 2 * n@ || n == 0;
+\end{lstlisting}
+\end{column}
+\begin{column}{0.45\textwidth}
+\tt\small
+{\color{gray}\only<2>{\color{darkgreen}}$\text{s}_\text{1} = \text{0}$} \\
+{\color{gray}\only<3,4,5>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{1} = \text{s}_\text{1} + \text{2}$} \\
+{\color{gray}\only<4,5>{\color{darkgreen}}$\text{2} \cdot \text{n}_\text{1} \ge \text{s}_\text{1} + \text{2}$} \\
+{\color{gray}\only<6>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{1} = \text{s}_\text{2}$} \\
+{\color{gray}\only<6,7>{\color{darkgreen}}$\text{2} \cdot \text{n}_\text{1} \ge \text{s}_\text{2}$} \\
+{\color{gray}\only<7>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{2} - \text{2} = \text{s}_\text{2}$} \\
+{\color{gray}\only<8,9>{\color{darkgreen}}\only<9>{\bf}$\text{2} \cdot \text{n}_\text{1} = \text{s}_\text{2}$} \\
+\end{column}
+\end{columns}
+\vskip1em
+\uncover<9>{\hbox to \hsize{\hfill This particular error trace became unreachable \hfill}}
+\end{frame}
 
   {
     \usebackgroundtemplate{

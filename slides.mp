@@ -248,7 +248,7 @@ tiv := image(
 tv := image(
     draw tiv;
 
-    label(btex {\sf\bfseries $\text{s}_\text{2} < \text{s}_\text{1} + \text{2}$} etex, (4w, 0h)) withcolor darkblue;
+    label(btex {\sf\bfseries $\text{s}_\text{2} = \text{s}_\text{1} + \text{2}$} etex, (4w, 0h)) withcolor darkblue;
 
     draw (4w, -1h + 5)--(4w, -1h - 5) withpen pencircle scaled 1 withcolor darkblue;
 );
