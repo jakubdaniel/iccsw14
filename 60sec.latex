@@ -25,7 +25,7 @@
 
   \begin{frame}{\ldots 10, 9, 8 \ldots}
     \begin{itemize}
-      \itemsep=1.2em
+      \itemsep=0.8em
       \item Predicate Abstraction
         \begin{itemize}
           \item Counterexample-Guided Abstraction Refinement
@@ -41,7 +41,11 @@
           \item \fakesc{UFO}
         \end{itemize}
       \item Our research ideas
+        \begin{itemize}
+          \item \fakesc{PANDA}: Predicate Abstraction in Dynamic Analysis
+        \end{itemize}
       \item Comparison of tools
     \end{itemize}
+    \vskip-0.3em
   \end{frame}
 \end{document}

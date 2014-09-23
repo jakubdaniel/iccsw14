@@ -123,7 +123,9 @@ beginfig(2)
   drawarrow ((0u, -2.5u)..(-1u,-1.75u)..(0u,0u) cutbefore (fullcircle scaled 2u shifted (0u, -2.5u)) cutafter (fullcircle scaled (2u + 3) shifted (0u, 0u))) withpen pencircle scaled 1.5 withcolor darkblue;
 endfig;
 
-beginfig(3)
+picture si, sii;
+
+si := image(
     w := 0.65u;
     draw node(( -6w,    0u), btex \Large\sf\bfseries init etex, darkblue, blue);
     draw node(( -2w, -1.5u), btex \LARGE\sf\bfseries $\text{s}_\text{m}$ etex, darkblue, blue);
@@ -149,9 +151,9 @@ beginfig(3)
     draw nonedge(( -6w, -1.5u), ( -4w,   -6u), btex etex, darkblue);
     draw nonedge(( -4w,   -3u), ( -4w,   -6u), btex etex, darkblue);
     draw nonedge(( -2w, -1.5u), ( -4w,   -6u), btex etex, darkblue);
-endfig;
+);
 
-beginfig(4)
+sii := image(
     w := 0.65u;
     draw node(( -6w,    0u), btex \Large\sf\bfseries init etex, darkblue, blue);
     draw node(( -2w, -1.5u), btex \LARGE\sf\bfseries $\text{s}_<$ etex, darkblue, blue);
@@ -171,6 +173,18 @@ beginfig(4)
     draw    edge((-10w,   -3u), (-10w, -4.5u), btex etex, darkblue);
     draw nonedge((-10w, -4.5u), (-10w,   -6u), btex etex, darkblue);
     draw nonedge(( -2w, -1.5u), ( -2w,   -6u), btex etex, darkblue);
+);
+
+beginfig(3)
+    draw si;
+
+    setbounds currentpicture to bbox(image(draw si; draw sii;));
+endfig;
+
+beginfig(4)
+    draw sii;
+
+    setbounds currentpicture to bbox(image(draw si; draw sii;));
 endfig;
 
 beginfig(5)

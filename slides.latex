@@ -3,11 +3,12 @@
 \documentclass{beamer}
 
 \def\event{{ICCSW'14}}
+\def\date{{2014-09-26}}
 
 \ifdefined\withcomments
-  \usetheme[event=\event,footlineauthor,comments]{D3S}
+  \usetheme[event=\event,date=\date,footlineauthor,comments]{D3S}
 \else
-  \usetheme[event=\event,footlineauthor]{D3S}
+  \usetheme[event=\event,date=\date,footlineauthor]{D3S}
 \fi
 
 \usepackage{color}
@@ -51,7 +52,8 @@
         \vskip2cm\hbox to \hsize{\hfill\includegraphics[scale=0.6]{slides3.mps}\hskip-0.5cm}
       }
     }
-    \begin{frame}[fragile]{Example Target Program}
+    \begin{frame}[t,fragile]{Example Target Program}
+      \vskip1em
       \begin{lstlisting}[language=MyC]
   unsigned int n = (*\bf\color{darkblue} *{}*);
   unsigned int i = s = 0;
@@ -64,8 +66,9 @@
 
   assert s == 2 * n || n == 0;
 \end{lstlisting}
+\vskip2em
 \begin{itemize}
-\item Explore the entire state space
+\item Goal: explore the entire state space
   \begin{itemize}
     \item Model Checking
     \item State space too large
@@ -80,7 +83,8 @@
         \vskip2cm\hbox to \hsize{\hfill\includegraphics[scale=0.6]{slides4.mps}\hskip-0.5cm}
       }
     }
-    \begin{frame}[fragile]{Abstraction Model Checking}
+    \begin{frame}[t,fragile]{Abstraction Model Checking}
+      \vskip1em
       \begin{lstlisting}[language=MyC]
   unsigned int n = (*\bf\color{darkblue} *{}*);
   unsigned int i = s = 0;
@@ -93,6 +97,7 @@
 
   assert s == 2 * n || n == 0;
 \end{lstlisting}
+\vskip2em
 \begin{itemize}
 \item Smaller state space
   \begin{itemize}
@@ -132,11 +137,11 @@
   \begin{frame}{Predicate Abstraction}
     \begin{itemize}
       \itemsep=1.5em
-      \item No concrete values
+      \item No concrete values of program variables
       \item Data abstracted with predicates: {\tt x.f > 3}, {\tt x = y}
       \item Statements interpreted with respect to effects on predicate values
         \begin{itemize}
-          \item In sense of Hoare logic
+          \item In the sense of Hoare logic
         \end{itemize}
     \end{itemize}
   \end{frame}
@@ -222,37 +227,50 @@ assert @9s == 2 * n@ || n == 0;
 \end{column}
 \begin{column}{0.45\textwidth}
 \tt\small
-{\color{gray}\only<2>{\color{darkgreen}}$\text{s}_\text{1} = \text{0}$} \\
-{\color{gray}\only<3,4,5>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{1} = \text{s}_\text{1} + \text{2}$} \\
-{\color{gray}\only<4,5>{\color{darkgreen}}$\text{2} \cdot \text{n}_\text{1} \ge \text{s}_\text{1} + \text{2}$} \\
-{\color{gray}\only<6>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{1} = \text{s}_\text{2}$} \\
-{\color{gray}\only<6,7>{\color{darkgreen}}$\text{2} \cdot \text{n}_\text{1} \ge \text{s}_\text{2}$} \\
-{\color{gray}\only<7>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{2} - \text{2} = \text{s}_\text{2}$} \\
-{\color{gray}\only<8,9>{\color{darkgreen}}\only<9>{\bfseries}$\text{2} \cdot \text{n}_\text{1} = \text{s}_\text{2}$} \\
+% With SSA indices
+%{\color{gray}\only<2>{\color{darkgreen}}$\text{s}_\text{1} = \text{0}$} \\
+%{\color{gray}\only<3,4,5>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{1} = \text{s}_\text{1} + \text{2}$} \\
+%{\color{gray}\only<4,5>{\color{darkgreen}}$\text{2} \cdot \text{n}_\text{1} \ge \text{s}_\text{1} + \text{2}$} \\
+%{\color{gray}\only<6>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{1} = \text{s}_\text{2}$} \\
+%{\color{gray}\only<6,7>{\color{darkgreen}}$\text{2} \cdot \text{n}_\text{1} \ge \text{s}_\text{2}$} \\
+%{\color{gray}\only<7>{\color{darkgreen}}$\text{2} \cdot \text{i}_\text{2} - \text{2} = \text{s}_\text{2}$} \\
+%{\color{gray}\only<8,9>{\color{darkgreen}}\only<9>{\bfseries}$\text{2} \cdot \text{n}_\text{1} = \text{s}_\text{2}$} \\
+{\color{gray}\only<2>{\color{darkgreen}}$\text{s} = \text{0}$} \\
+{\color{gray}\only<3,4,5>{\color{darkgreen}}$\text{2} \cdot \text{i} = \text{s} + \text{2}$} \\
+{\color{gray}\only<4,5>{\color{darkgreen}}$\text{2} \cdot \text{n} \ge \text{s} + \text{2}$} \\
+{\color{gray}\only<6>{\color{darkgreen}}$\text{2} \cdot \text{i} = \text{s}$} \\
+{\color{gray}\only<6,7>{\color{darkgreen}}$\text{2} \cdot \text{n} \ge \text{s}$} \\
+{\color{gray}\only<7>{\color{darkgreen}}$\text{2} \cdot \text{i} - \text{2} = \text{s}$} \\
+{\color{gray}\only<8,9>{\color{darkgreen}}\only<9>{\bfseries}$\text{2} \cdot \text{n} = \text{s}$} \\
 \end{column}
 \end{columns}
 \vskip1em
 \uncover<9>{\hbox to \hsize{\hfill This particular error trace became unreachable \hfill}}
 \end{frame}
 
-  {
-    \usebackgroundtemplate{
-      \vbox{
-        \vskip1.75cm\hbox to \hsize{\hfill\includegraphics[scale=0.8]{slides2.mps}\hskip-0.5cm}
-      }
-    }
-    \begin{frame}{Counterexample-Guided Abstraction Refinement}
-      \begin{itemize}
-        \itemsep=1.5em
-        \item Begin with no predicates
-        \item Explore state space
-        \item Safe if no counterexample is found
-        \item Check feasibility of counterexamples
-        \item Exclude infeasible traces by refinement
-        \item Report any feasible counterexample
-      \end{itemize}
-    \end{frame}
-  }
+%  {
+%    \usebackgroundtemplate{
+%      \vbox{
+%        \vskip1.75cm\hbox to \hsize{\hfill\includegraphics[scale=0.8]{slides2.mps}\hskip-0.5cm}
+%      }
+%    }
+%    \begin{frame}{Counterexample-Guided Abstraction Refinement}
+%      \begin{itemize}
+%        \itemsep=1.5em
+%        \item Begin with no predicates
+%        \item Explore state space
+%        \item Safe if no counterexample is found
+%        \item Check feasibility of counterexamples
+%        \item Exclude infeasible traces by refinement
+%        \item Report any feasible counterexample
+%      \end{itemize}
+%    \end{frame}
+%  }
+
+  \begin{frame}{Counterexample-Guided Abstraction Refinement}
+  \centering
+  \includegraphics[scale=1.2]{slides2.mps}
+  \end{frame}
 
   \begin{frame}{Lazy Abstraction}
     \begin{itemize}
@@ -335,7 +353,7 @@ assert @9s == 2 * n@ || n == 0;
         \itemsep=1em
         \item Verification tool for Java bytecode
         \item Built on top of Java Pathfinder
-        \item Combines concrete and abstract interpretation
+        \item Combines concrete execution with abstraction
       \end{itemize}
     \end{frame}
   }
