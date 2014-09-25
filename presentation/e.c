@@ -1,13 +1,13 @@
 int main() {
-    unsigned int i, n = 10, sn = 0;
+    unsigned int i, n = 10, s = 0;
 
     for (i = 1; i <= n; ++i) {
         if (i < 5) {
-            sn += 2;
+            s += 2;
         }
     }
 
-    if (sn != 2 * n && n != 0) {
+    if (s != 2 * n) {
         ERROR: goto ERROR;
     }
 }

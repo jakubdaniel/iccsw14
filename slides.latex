@@ -64,7 +64,7 @@
       }
   }
 
-  assert s == 2 * n || n == 0;
+  assert s == 2 * n;
 \end{lstlisting}
 \vskip2em
 \begin{itemize}
@@ -95,7 +95,7 @@
       }
   }
 
-  assert s == 2 * n || n == 0;
+  assert s == 2 * n;
 \end{lstlisting}
 \vskip2em
 \begin{itemize}
@@ -188,7 +188,7 @@
       }
   }
 
-  assert @9s == 2 * n@ || n == 0;
+  assert @9s == 2 * n@;
 \end{lstlisting}
 \vskip1em
 \invisible{\includegraphics<1>[scale=0.7]{slides6.mps}} % Reserve space
@@ -222,7 +222,7 @@ for (@3i = 1@; @4@8i <= n@@; @7++i@) {
     }
 }
 
-assert @9s == 2 * n@ || n == 0;
+assert @9s == 2 * n@;
 \end{lstlisting}
 \end{column}
 \begin{column}{0.45\textwidth}
@@ -322,7 +322,7 @@ assert @9s == 2 * n@ || n == 0;
         \end{itemize}
       \item Refine along multiple traces at once
         \begin{itemize}
-          \item Encode Abstract Reachability Graph into a trace
+          \item Encode Abstract Reachability Graph into formula
         \end{itemize}
     \end{itemize}
   \end{frame}
