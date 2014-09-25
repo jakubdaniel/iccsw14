@@ -33,7 +33,6 @@
 
 !presentation
 !presentation/blast.sh
-!presentation/blast_svcomp.c
 !presentation/wolverine.sh
 !presentation/cpa.sh
 !presentation/ufo.sh
