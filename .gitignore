@@ -32,8 +32,12 @@
 !method2.pred
 
 !presentation
-!presentation/blast.sh
-!presentation/wolverine.sh
-!presentation/cpa.sh
-!presentation/ufo.sh
+!presentation/blast
+!presentation/blast/blast.sh
+!presentation/wolverine
+!presentation/wolverine/wolverine.sh
+!presentation/cpa
+!presentation/cpa/cpa.sh
+!presentation/ufo
+!presentation/ufo/ufo.sh
 !presentation/e.c
