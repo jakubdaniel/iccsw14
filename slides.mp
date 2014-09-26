@@ -156,14 +156,14 @@ si := image(
 sii := image(
     w := 0.65u;
     draw node(( -6w,    0u), btex \Large\sf\bfseries init etex, darkblue, blue);
-    draw node(( -2w, -1.5u), btex \LARGE\sf\bfseries $\text{s}_<$ etex, darkblue, blue);
-    draw node((-10w, -1.5u), btex \LARGE\sf\bfseries $\text{s}_\ge$ etex, darkblue, blue);
+    draw node((-10w, -1.5u), btex \LARGE\sf\bfseries $\text{s}_<$ etex, darkblue, blue);
+    draw node(( -2w, -1.5u), btex \LARGE\sf\bfseries $\text{s}_\ge$ etex, darkblue, blue);
 
     draw edge((-6w, 0u), ( -2w, -1.5u), btex etex, darkblue);
     draw edge((-6w, 0u), (-10w, -1.5u), btex etex, darkblue);
 
-    label.urt(btex \Large\sf\bfseries $\text{n} \ge \text{2}^\text{31}$ etex, (-4w + 0.25u, -0.75u)) withcolor darkblue;
     label.ulft(btex \Large\sf\bfseries $\text{n} < \text{2}^\text{31}$ etex, (-8w - 0.25u, -0.75u)) withcolor darkblue;
+    label.urt(btex \Large\sf\bfseries $\text{n} \ge \text{2}^\text{31}$ etex, (-4w + 0.25u, -0.75u)) withcolor darkblue;
 
     draw node((-10w,   -3u), btex \LARGE\sf\bfseries $\text{s}_\text{0}'$ etex, darkblue, blue);
     draw node((-10w, -4.5u), btex \LARGE\sf\bfseries $\text{s}_\text{0}''$ etex, darkblue, blue);
